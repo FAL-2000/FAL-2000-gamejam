@@ -18,41 +18,36 @@ public class TimeManipulated : MonoBehaviour
     }
     private TimeState m_timeState;
     private List<string> m_robotState;
-    private LinkedList<StoredPosition> movementHistory;
+    private LinkedList<StoredPosition> m_movementHistory;
     // Use this for initialization
     void Start()
     {
-        movementHistory = new LinkedList<StoredPosition>();
+        m_movementHistory = new LinkedList<StoredPosition>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     void FixedUpdate()
     {
         if (m_timeState == TimeState.Normal)
         {
-            movementHistory.AddFirst(new StoredPosition(transform, m_robotState));
-            if (movementHistory.Count >= 60 * 10)
-                movementHistory.RemoveLast();
+            m_movementHistory.AddFirst(new StoredPosition(transform, m_robotState));
+            if (m_movementHistory.Count >= 60 * 10)
+                m_movementHistory.RemoveLast();
             GetComponent<RobotMovement>().Move();
         }
         else if (m_timeState == TimeState.Backward)
         {
-            if (movementHistory.Count <= 0)
+            if (m_movementHistory.Count > 0)
             {
-                m_timeState = TimeState.Normal;
-            }
-            else
-            {
-                StoredPosition sp = movementHistory.First.Value;
+                StoredPosition sp = m_movementHistory.First.Value;
                 transform.position = sp.position;
                 transform.rotation = sp.rotation;
                 GetComponent<RobotMovement>().SetRobotState(sp.robotState);
-                movementHistory.RemoveFirst();
+                m_movementHistory.RemoveFirst();
             }
         }
     }
@@ -60,6 +55,7 @@ public class TimeManipulated : MonoBehaviour
     //Set timestate here
     public void SetTimeState(TimeState timeState)
     {
+        GetComponent<RobotMovement>().TimeStateChange(m_timeState, timeState);
         m_timeState = timeState;
     }
 

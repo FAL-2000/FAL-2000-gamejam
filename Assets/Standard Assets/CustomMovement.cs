@@ -4,10 +4,7 @@ using System;
 using System.Collections.Generic;
 
 public class CustomMovement : RobotMovement {
-    [SerializeField]
     private float m_timer;
-
-    [SerializeField]
     private Vector3 m_direction = new Vector3(0.1f,0,0);
 
     public override void Move()
@@ -31,7 +28,11 @@ public class CustomMovement : RobotMovement {
     {
         m_timer = float.Parse(robotState[0]);
         string[] components = robotState[1].Split(new string[] { "," }, StringSplitOptions.None);
-        m_direction = new Vector3(float.Parse(components[0]), float.Parse(components[1]), float.Parse(components[1]));
+        m_direction = new Vector3(float.Parse(components[0]), float.Parse(components[1]), float.Parse(components[2]));
+    }
+
+    public override void TimeStateChange(TimeState old, TimeState nu)
+    {
     }
 
     // Use this for initialization
