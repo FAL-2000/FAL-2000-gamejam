@@ -26,5 +26,6 @@ public abstract class RobotMovement : MonoBehaviour {
 
     public abstract void Move();
     public abstract void SetRobotState(List<string> robotState);
+    //Called when TimeState is changed.
     public abstract void TimeStateChange(TimeState old, TimeState nu);
 }

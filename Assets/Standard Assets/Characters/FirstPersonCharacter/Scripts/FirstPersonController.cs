@@ -82,9 +82,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
-            TimeManipulation();
         }
-
 
         private void PlayLandingSound()
         {
@@ -232,35 +230,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             {
                 StopAllCoroutines();
                 StartCoroutine(!m_IsWalking ? m_FovKick.FOVKickUp() : m_FovKick.FOVKickDown());
-            }
-        }
-
-        private void TimeManipulation()
-        {
-            TimeManipulated[] list = UnityEngine.Object.FindObjectsOfType<TimeManipulated>();
-            if (list.Length <= 0)
-                return;
-            TimeState currentTimeState = list[0].GetTimeState();
-            foreach (TimeManipulated timeManipulated in list)
-            {
-                if (CrossPlatformInputManager.GetButtonDown("TimeStop"))
-                {
-                    if (currentTimeState == TimeState.Normal)
-                        timeManipulated.SetTimeState(TimeState.Stop);
-                    else if (currentTimeState == TimeState.Stop)
-                        timeManipulated.SetTimeState(TimeState.Normal);
-                }
-                else if (currentTimeState != TimeState.Stop)
-                {
-                    if (CrossPlatformInputManager.GetButton("TimeBack"))
-                    {
-                        timeManipulated.SetTimeState(TimeState.Backward);
-                    }
-                    else
-                    {
-                        timeManipulated.SetTimeState(TimeState.Normal);
-                    }
-                }
             }
         }
 
