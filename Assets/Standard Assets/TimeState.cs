@@ -1,0 +1,1 @@
+﻿public enum TimeState { Normal, Backward, Stop };
