@@ -19,6 +19,8 @@ public class CustomMovement : RobotMovement {
             m_timer = 0;
         }
         transform.position += m_direction;
+
+        // Serialilze custom properties to string (Pay attention how to serialize Vector3)
         List<string> state = new List<string>();
         state.Add(m_timer.ToString());
         state.Add(m_direction.x + "," + m_direction.y + "," + m_direction.z);
@@ -39,6 +41,5 @@ public class CustomMovement : RobotMovement {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(m_timer);
     }
 }
