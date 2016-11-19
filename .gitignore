@@ -1,5 +1,8 @@
 Library/*
+Temp/*
+Temp/bin/*
 *.info
 *.resource
 *.userprefs
 *.bakert
+*.dll
