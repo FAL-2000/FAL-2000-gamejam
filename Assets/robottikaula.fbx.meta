@@ -21,6 +21,10 @@ ModelImporter:
     100026: //RootNode
     100028: Sphere
     100030: Sphere.001
+    100032: Armature.001
+    100034: Bone.001
+    100036: Bone.002
+    100038: Bone.002_end
     400000: Armature
     400002: BezierCurve.001
     400004: Bone.body
@@ -37,6 +41,10 @@ ModelImporter:
     400026: //RootNode
     400028: Sphere
     400030: Sphere.001
+    400032: Armature.001
+    400034: Bone.001
+    400036: Bone.002
+    400038: Bone.002_end
     2300000: BezierCurve.001
     2300002: Cylinder
     2300004: Sphere.001
@@ -159,8 +167,132 @@ ModelImporter:
     7400218: Camera|sivuttain
     7400220: Camera|SphereAction
     7400222: Camera|ylos
+    7400224: Armature.001|Action
+    7400226: Armature.001|death
+    7400228: Armature.001|EmptyAction
+    7400230: Armature.001|EmptyAction.001
+    7400232: Armature.001|EmptyAction.sivu
+    7400234: Armature.001|EmptyAction.sivuttain.001
+    7400236: Armature.001|EmptyAction.sivuttain.002
+    7400238: Armature.001|EmptyAction.ylos
+    7400240: Armature.001|EmptyAction.ylos.001
+    7400242: Armature.001|EmptyAction.ylos.002
+    7400244: Armature.001|EmptyAction.ylos.003
+    7400246: Armature.001|EmptyAction.sivuttain
+    7400248: Armature.001|huomaa_pelaajan
+    7400250: Armature.001|kuolema
+    7400252: Armature.001|luukku
+    7400254: Armature.001|luukku.001
+    7400256: Armature.001|luukku.auki
+    7400258: Armature.001|luukku.auki.001
+    7400260: Armature.001|luukku.kiinni
+    7400262: Armature.001|luukku.kiinni.001
+    7400264: Armature.001|sivu
+    7400266: Armature.001|sivuttain
+    7400268: Armature.001|sivuttainheilutus
+    7400270: Armature.001|SphereAction
+    7400272: Armature.001|SphereAction.001
+    7400274: Armature.001|uusi
+    7400276: Armature.001|ylos
+    7400278: Sphere.001|Action
+    7400280: Sphere.001|death
+    7400282: Sphere.001|huomaa_pelaajan
+    7400284: Sphere.001|kuolema
+    7400286: Sphere.001|luukku.001
+    7400288: Sphere.001|luukku.auki
+    7400290: Sphere.001|luukku.auki.001
+    7400292: Sphere.001|luukku.kiinni
+    7400294: Sphere.001|luukku.kiinni.001
+    7400296: Sphere.001|sivuttainheilutus
+    7400298: Sphere.001|SphereAction.001
+    7400300: Sphere.001|uusi
+    7400302: Empty|Action
+    7400304: Empty|death
+    7400306: Empty|huomaa_pelaajan
+    7400308: Empty|kuolema
+    7400310: Empty|luukku.001
+    7400312: Empty|luukku.auki
+    7400314: Empty|luukku.auki.001
+    7400316: Empty|luukku.kiinni
+    7400318: Empty|luukku.kiinni.001
+    7400320: Empty|sivuttainheilutus
+    7400322: Empty|SphereAction.001
+    7400324: Empty|uusi
+    7400326: BezierCurve.001|Action
+    7400328: BezierCurve.001|death
+    7400330: BezierCurve.001|huomaa_pelaajan
+    7400332: BezierCurve.001|kuolema
+    7400334: BezierCurve.001|luukku.001
+    7400336: BezierCurve.001|luukku.auki
+    7400338: BezierCurve.001|luukku.auki.001
+    7400340: BezierCurve.001|luukku.kiinni
+    7400342: BezierCurve.001|luukku.kiinni.001
+    7400344: BezierCurve.001|sivuttainheilutus
+    7400346: BezierCurve.001|SphereAction.001
+    7400348: BezierCurve.001|uusi
+    7400350: Armature|Action
+    7400352: Armature|death
+    7400354: Armature|huomaa_pelaajan
+    7400356: Armature|kuolema
+    7400358: Armature|luukku.001
+    7400360: Armature|luukku.auki
+    7400362: Armature|luukku.auki.001
+    7400364: Armature|luukku.kiinni
+    7400366: Armature|luukku.kiinni.001
+    7400368: Armature|sivuttainheilutus
+    7400370: Armature|SphereAction.001
+    7400372: Armature|uusi
+    7400374: Sphere|Action
+    7400376: Sphere|death
+    7400378: Sphere|huomaa_pelaajan
+    7400380: Sphere|kuolema
+    7400382: Sphere|luukku.001
+    7400384: Sphere|luukku.auki
+    7400386: Sphere|luukku.auki.001
+    7400388: Sphere|luukku.kiinni
+    7400390: Sphere|luukku.kiinni.001
+    7400392: Sphere|sivuttainheilutus
+    7400394: Sphere|SphereAction.001
+    7400396: Sphere|uusi
+    7400398: Cylinder|Action
+    7400400: Cylinder|death
+    7400402: Cylinder|huomaa_pelaajan
+    7400404: Cylinder|kuolema
+    7400406: Cylinder|luukku.001
+    7400408: Cylinder|luukku.auki
+    7400410: Cylinder|luukku.auki.001
+    7400412: Cylinder|luukku.kiinni
+    7400414: Cylinder|luukku.kiinni.001
+    7400416: Cylinder|sivuttainheilutus
+    7400418: Cylinder|SphereAction.001
+    7400420: Cylinder|uusi
+    7400422: Lamp|Action
+    7400424: Lamp|death
+    7400426: Lamp|huomaa_pelaajan
+    7400428: Lamp|kuolema
+    7400430: Lamp|luukku.001
+    7400432: Lamp|luukku.auki
+    7400434: Lamp|luukku.auki.001
+    7400436: Lamp|luukku.kiinni
+    7400438: Lamp|luukku.kiinni.001
+    7400440: Lamp|sivuttainheilutus
+    7400442: Lamp|SphereAction.001
+    7400444: Lamp|uusi
+    7400446: Camera|Action
+    7400448: Camera|death
+    7400450: Camera|huomaa_pelaajan
+    7400452: Camera|kuolema
+    7400454: Camera|luukku.001
+    7400456: Camera|luukku.auki
+    7400458: Camera|luukku.auki.001
+    7400460: Camera|luukku.kiinni
+    7400462: Camera|luukku.kiinni.001
+    7400464: Camera|sivuttainheilutus
+    7400466: Camera|SphereAction.001
+    7400468: Camera|uusi
     9500000: //RootNode
     13700000: Sphere
+    13700002: Sphere.001
   materials:
     importMaterials: 1
     materialName: 0
