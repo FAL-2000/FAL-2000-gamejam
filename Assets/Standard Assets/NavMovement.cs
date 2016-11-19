@@ -7,7 +7,7 @@ public class NavMovement : RobotMovement {
     private Vector3 lastVelocity = Vector3.zero;
     public override void Move()
     {
-        GameObject plr = GameObject.Find("FPSController");
+        GameObject plr = GameObject.FindGameObjectWithTag("Player");
         GetComponent<NavMeshAgent>().SetDestination(plr.transform.position);
         lastVelocity = GetComponent<NavMeshAgent>().velocity;
     }
