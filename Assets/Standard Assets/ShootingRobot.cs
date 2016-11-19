@@ -3,14 +3,17 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityStandardAssets.CrossPlatformInput;
+using System.Linq;
 
-public class MeleeRobot : RobotMovement {
+public class ShootingRobot : RobotMovement {
+    public float rateOfFire;
+    public GameObject bullet;
     public enum AIState { Patrol, Wait, Attack, None };
     public GameObject[] patrolPath;
     public float fov;
     public float patrolWaitTime;
     public float lookAroundTime;
-    public float punchDistance;
+    public float heartRipDistance;
     public float lookAroundAngle;
 
     private Vector3 m_lastVelocity = Vector3.zero;
@@ -19,8 +22,10 @@ public class MeleeRobot : RobotMovement {
     private int m_currentPatrolPoint;
     private float m_waitTime;
     private float m_lookAround;
+    private float m_timeToFire;
     public override void Move()
     {
+
         GameObject plr = GameObject.FindGameObjectWithTag("Player");
         NavMeshAgent nav = GetComponent<NavMeshAgent>();
         m_lastVelocity = nav.velocity;
@@ -29,14 +34,16 @@ public class MeleeRobot : RobotMovement {
             case AIState.Attack:
                 if (CanSee(plr))
                 {
-                    m_currentDest = plr.transform.position;
+                    m_currentDest = transform.position;
                     transform.forward = plr.transform.position - transform.position;
+                    m_timeToFire -= Time.fixedDeltaTime;
+                    if (m_timeToFire <= 0)
+                    {
+                        Shoot();
+                        m_timeToFire = 1 / rateOfFire;
+                    }
                 }
-                if (CanSee(plr) && CloseToTarget(plr.transform.position, punchDistance))
-                {
-                    Debug.Log("DEAD!!");
-                }
-                if (!CanSee(plr) && CloseToTarget(m_currentDest, 1))
+                if (!CanSee(plr))
                 {
                     m_aiState = AIState.Patrol;
                 }
@@ -80,29 +87,13 @@ public class MeleeRobot : RobotMovement {
         state.Add(m_currentPatrolPoint.ToString());
         state.Add(m_waitTime.ToString());
         state.Add(m_lookAround.ToString());
+        state.Add(m_timeToFire.ToString());
         GetComponent<TimeManipulated>().SetRobotState(state);
     }
 
-    private bool CloseToTarget(Vector3 target, float tol)
+    private void Shoot()
     {
-        return (transform.position - target).sqrMagnitude < tol * tol;
-    }
-
-    private bool CanSee(GameObject target)
-    {
-        RaycastHit hit;
-        Physics.Raycast(transform.position, target.transform.position - transform.position, out hit);
-        if (hit.transform == null)
-            return false;
-
-        Vector3 targetDir = (target.transform.position - transform.position).normalized;
-        float halfFov = Mathf.Deg2Rad * fov / 2;
-        return Vector3.Dot(targetDir, transform.forward) > Mathf.Cos(halfFov) && hit.transform.gameObject == target;
-    }
-
-    private GameObject NextPatrolPoint()
-    {
-        return patrolPath[m_currentPatrolPoint];
+        Instantiate(bullet, transform.position + transform.forward * 0.7f + transform.right * 0.25f + transform.up * 0.68f, transform.rotation);
     }
 
     public override void SetRobotState(List<string> robotState)
@@ -112,6 +103,7 @@ public class MeleeRobot : RobotMovement {
         m_currentPatrolPoint = int.Parse(robotState[2]);
         m_waitTime = float.Parse(robotState[3]);
         m_lookAround = float.Parse(robotState[4]);
+        m_timeToFire = float.Parse(robotState[5]);
     }
 
     public override void TimeStateChange(TimeState old, TimeState nu)
@@ -132,7 +124,8 @@ public class MeleeRobot : RobotMovement {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         if (patrolPath.Length <= 0)
         {
             patrolPath = new GameObject[1];
@@ -141,10 +134,11 @@ public class MeleeRobot : RobotMovement {
             patrolPath[0].transform.rotation = transform.rotation;
         }
         m_currentPatrolPoint = 0;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         GetComponent<NavMeshAgent>().SetDestination(m_currentDest);
 
         if (CrossPlatformInputManager.GetButtonDown("Fire1"))
@@ -156,8 +150,37 @@ public class MeleeRobot : RobotMovement {
         GameObject plr = GameObject.FindGameObjectWithTag("Player");
         Vector3 targetDir = (transform.position - plr.transform.position).normalized;
         float halfFov = Mathf.Deg2Rad * fov / 2;
-        if (Vector3.Dot(targetDir, transform.forward) > Mathf.Cos(halfFov) && CloseToTarget(plr.transform.position, punchDistance))
+        if (Vector3.Dot(targetDir, transform.forward) > Mathf.Cos(halfFov) && CloseToTarget(plr.transform.position, heartRipDistance))
             Debug.Log("EAT YOUR HEART OUT");
+    }
+
+    private bool CloseToTarget(Vector3 target, float tol)
+    {
+        return (transform.position - target).sqrMagnitude < tol * tol;
+    }
+
+    private bool CanSee(GameObject target)
+    {
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, target.transform.position - transform.position).OrderBy(h => h.distance).ToArray();
+        GameObject hit = null;
+        foreach (RaycastHit h in hits)
+        {
+            if (h.transform.tag == "Bullet")
+                continue;
+            hit = h.transform.gameObject;
+            break;
+        }
+        if (hit == null)
+            return false;
+
+        Vector3 targetDir = (target.transform.position - transform.position).normalized;
+        float halfFov = Mathf.Deg2Rad * fov / 2;
+        return Vector3.Dot(targetDir, transform.forward) > Mathf.Cos(halfFov) && hit == target;
+    }
+
+    private GameObject NextPatrolPoint()
+    {
+        return patrolPath[m_currentPatrolPoint];
     }
 
     private string SerializeVector(Vector3 vec)

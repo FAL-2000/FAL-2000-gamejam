@@ -68,4 +68,9 @@ public class TimeManipulated : MonoBehaviour
     {
         m_robotState = robotState;
     }
+
+    public bool NoMovementHistory()
+    {
+        return m_movementHistory.Count <= 0;
+    }
 }
