@@ -4,6 +4,8 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class TimeManipulatingPlayer : MonoBehaviour {
     private Camera m_Camera;
+	public AudioReverbZone TimeStopSoundReverbZone;	//needs catcher, now manually put!
+	public AudioReverbZone TimeRevindSoundReverbZone;	//needs catcher, now manually put!
 
     // Use this for initialization
     void Start () {
@@ -40,19 +42,27 @@ public class TimeManipulatingPlayer : MonoBehaviour {
             if (CrossPlatformInputManager.GetButtonDown("TimeStop"))
             {
                 if (currentTimeState == TimeState.Normal)
+				{
                     timeManipulated.SetTimeState(TimeState.Stop);
+					TimeStopSoundReverbZone.gameObject.SetActive(true);
+				}
                 else if (currentTimeState == TimeState.Stop)
+				{
                     timeManipulated.SetTimeState(TimeState.Normal);
+					TimeStopSoundReverbZone.gameObject.SetActive(false);
+				}
             }
             else if (currentTimeState != TimeState.Stop)
             {
                 if (CrossPlatformInputManager.GetButton("TimeBack"))
                 {
                     timeManipulated.SetTimeState(TimeState.Backward);
+					TimeRevindSoundReverbZone.gameObject.SetActive(true);
                 }
                 else
                 {
-                    timeManipulated.SetTimeState(TimeState.Normal);
+					timeManipulated.SetTimeState(TimeState.Normal);
+					TimeRevindSoundReverbZone.gameObject.SetActive(false);
                 }
             }
         }
