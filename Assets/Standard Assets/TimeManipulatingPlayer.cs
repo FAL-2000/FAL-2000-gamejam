@@ -12,6 +12,7 @@ public class TimeManipulatingPlayer : MonoBehaviour {
 	public int TimeResource = 100;		//the Time Resource!
 	public bool TimeManipulationHappening = false;	// is something FUN going on?
 	public bool TimeResourceRecoverHappening = true;
+	public bool DEBUGPOWERS = false;	// ALL THE POWER IN THE WORLD!
 
 	public Text ResourceViewText;
 	public Image ResourceImage;
@@ -35,6 +36,12 @@ public class TimeManipulatingPlayer : MonoBehaviour {
         {
             Shoot();
         }
+
+		if (DEBUGPOWERS == true) {
+			TimeResource = 5000;	// muahahahaaaaa!!!
+			
+		}
+
 
 		if (TimeManipulationHappening == true) {
 			
