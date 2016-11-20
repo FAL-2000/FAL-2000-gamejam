@@ -50,6 +50,8 @@ public class Bullet : RobotMovement {
     {
         if (GetComponent<TimeManipulated>().GetTimeState() == TimeState.Normal)
         {
+            if (coll.gameObject.layer == LayerMask.NameToLayer("Ignore Raycast"))
+                return;
             if (coll.tag == "Player")
                 coll.transform.gameObject.GetComponent<TimeManipulatingPlayer>().Die();
             if (coll.tag == "Enemy")

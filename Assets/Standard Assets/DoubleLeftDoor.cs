@@ -4,9 +4,9 @@ using System.Collections;
 public class DoubleLeftDoor : MonoBehaviour
 {
     //private AudioSource doorOpenSound; 
-    public AudioSource[] sounds;
+    /*public AudioSource[] sounds;
     public AudioSource noise1;
-    public AudioSource noise2;
+    public AudioSource noise2;*/
 
 
     private static short CLOSED = 0;
@@ -19,18 +19,18 @@ public class DoubleLeftDoor : MonoBehaviour
     public float movementSpeed = 1.0F;
     public float maxMove = 1.35F;
 
-    private float targetX;
-    private float originalX;
+    private float targetZ;
+    private float originalZ;
 
     // Use this for initialization
     void Start()
     {
         //doorOpenSound = GetComponent<AudioSource>();
-        originalX = transform.localPosition.x;
-        targetX = originalX - maxMove;
-        sounds = GetComponents<AudioSource>();
+        originalZ = transform.localPosition.z;
+        targetZ = originalZ - maxMove;
+        /*sounds = GetComponents<AudioSource>();
         noise1 = sounds[0];
-        noise2 = sounds[1];
+        noise2 = sounds[1];*/
     }
 
     // Update is called once per frame
@@ -38,9 +38,9 @@ public class DoubleLeftDoor : MonoBehaviour
     {
         if (state == OPENING)
         {
-            if (transform.localPosition.x > targetX)
+            if (transform.localPosition.z > targetZ)
             {
-                transform.Translate(new Vector3(-1.0F, 0.0F, 0.0F) * Time.deltaTime * movementSpeed);
+                transform.Translate(new Vector3(0.0F, 1.0F, 0.0F) * Time.deltaTime * movementSpeed);
             }
             else
             {
@@ -49,9 +49,9 @@ public class DoubleLeftDoor : MonoBehaviour
         }
         else if (state == CLOSING)
         {
-            if (transform.localPosition.x < originalX)
+            if (transform.localPosition.z < originalZ)
             {
-                transform.Translate(new Vector3(1F, 0F, 0F) * Time.deltaTime * movementSpeed);
+                transform.Translate(new Vector3(0F, -1.0F, 0F) * Time.deltaTime * movementSpeed);
             }
             else
             {
@@ -66,13 +66,13 @@ public class DoubleLeftDoor : MonoBehaviour
         if (state == CLOSED || state == CLOSING)
         {
             state = OPENING;
-            noise1.Play();
+            //noise1.Play();
 
         }
         else if (state == OPEN || state == OPENING)
         {
             state = CLOSING;
-            noise2.Play();
+            //noise2.Play();
         }
     }
 

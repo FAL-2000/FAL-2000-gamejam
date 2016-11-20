@@ -17,12 +17,12 @@ public class KeyDoorTrigger : MonoBehaviour {
     {
         //Debug.Log(other.name);
 
-        if (other.tag == "Robot")
+        if (other.tag == "Enemy")
         {
-            if (transform.name == "KeyDoor")
+            if (transform.name == "GlassDoorTrigger")
             {
                 Debug.Log("Robot detected at door");
-                DoorScript2 ds2 = transform.GetChild(0).GetComponent<DoorScript2>();
+                DoorScript2 ds2 = transform.Find("Glass_Door").GetComponent<DoorScript2>();
                 if (ds2.isCLosedOrClosing())
                     ds2.buttonPress();
             }

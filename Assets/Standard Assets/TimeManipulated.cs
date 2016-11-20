@@ -41,7 +41,7 @@ public class TimeManipulated : MonoBehaviour
         }
         else if (m_timeState == TimeState.Backward)
         {
-            if (m_movementHistory.Count > 0)
+            if (m_movementHistory.Count > 1)
             {
                 StoredPosition sp = m_movementHistory.First.Value;
                 transform.position = sp.position;
@@ -71,6 +71,6 @@ public class TimeManipulated : MonoBehaviour
 
     public bool NoMovementHistory()
     {
-        return m_movementHistory.Count <= 0;
+        return m_movementHistory.Count <= 1;
     }
 }
