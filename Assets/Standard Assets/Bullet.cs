@@ -6,6 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class Bullet : RobotMovement {
     public float speed;
+    public AudioClip DeathSound;
     private Vector3 m_origin;
     public override void Move()
     {
@@ -37,7 +38,6 @@ public class Bullet : RobotMovement {
             Vector3 bulletpos = new Vector3(transform.position.x, plr.transform.position.y, transform.position.z);
             Vector3 targetDir = (plr.transform.position - bulletpos).normalized;
             float tol = Mathf.Deg2Rad * 10;
-            Debug.Log(-Mathf.Cos(tol));
             if (Vector3.Dot(targetDir, plr.transform.forward) < -Mathf.Cos(tol) && (bulletpos - plr.transform.position).sqrMagnitude < 9)
             {
                 transform.forward = GameObject.FindGameObjectWithTag("Player").transform.forward;
@@ -56,7 +56,10 @@ public class Bullet : RobotMovement {
             if (coll.tag == "Player")
                 coll.transform.gameObject.GetComponent<TimeManipulatingPlayer>().Die();
             if (coll.tag == "Enemy")
-                Debug.Log("Enemy Dead");
+            {
+                AudioSource.PlayClipAtPoint(DeathSound, transform.position);
+                Destroy(coll.gameObject);
+            }
             if (coll.tag != "Bullet")
                 Destroy(gameObject);
         }

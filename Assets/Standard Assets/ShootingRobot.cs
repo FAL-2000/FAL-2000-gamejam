@@ -16,6 +16,7 @@ public class ShootingRobot : RobotMovement {
     public float heartRipDistance;
     public float lookAroundAngle;
     public AudioClip alert;
+    public AudioClip DeathSound;
 
     private Vector3 m_lastVelocity = Vector3.zero;
     private AIState m_aiState = AIState.Patrol;
@@ -156,7 +157,10 @@ public class ShootingRobot : RobotMovement {
         Vector3 targetDir = (transform.position - plr.transform.position).normalized;
         float halfFov = Mathf.Deg2Rad * fov / 2;
         if (Vector3.Dot(targetDir, transform.forward) > Mathf.Cos(halfFov) && CloseToTarget(plr.transform.position, heartRipDistance))
-            Debug.Log("EAT YOUR HEART OUT");
+        {
+            AudioSource.PlayClipAtPoint(DeathSound, transform.position);
+            Destroy(gameObject);
+        }
     }
 
     private bool CloseToTarget(Vector3 target, float tol)
