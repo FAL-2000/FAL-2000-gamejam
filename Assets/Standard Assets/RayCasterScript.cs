@@ -50,8 +50,8 @@ public class RayCasterScript : MonoBehaviour {
                             }
                         break;
                     case "DoubleKeyNone":
-                        dld = hit.transform.Find("DoorLeft").GetComponent<DoubleLeftDoor>();
-                        drd = hit.transform.Find("DoorRight").GetComponent<DoubleRightDoor>();
+                        dld = hit.transform.Find("Smaller_Door").GetComponent<DoubleLeftDoor>();
+                        drd = hit.transform.Find("Bigger_Door").GetComponent<DoubleRightDoor>();
                         dld.buttonPress();
                         drd.buttonPress();
 

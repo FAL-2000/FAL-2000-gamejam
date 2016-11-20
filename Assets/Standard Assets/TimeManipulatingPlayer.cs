@@ -118,6 +118,8 @@ public class TimeManipulatingPlayer : MonoBehaviour {
 
     public void Die()
     {
+        if (DEBUGPOWERS)
+            return;
         m_dying = true;
         GetComponent<FirstPersonController>().enabled = false;
     }
