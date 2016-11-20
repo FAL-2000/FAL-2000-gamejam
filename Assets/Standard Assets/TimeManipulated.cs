@@ -30,7 +30,7 @@ public class TimeManipulated : MonoBehaviour
     {
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         if (m_timeState == TimeState.Normal)
         {

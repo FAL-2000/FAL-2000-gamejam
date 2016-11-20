@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class TimeManipulatingPlayer : MonoBehaviour {
     private Camera m_Camera;
@@ -24,9 +26,16 @@ public class TimeManipulatingPlayer : MonoBehaviour {
 	public AudioSource EndOfTimeTravelSound;
 	public AudioSource TimeResourceRecoverSound;
 
+    public Texture fadeoutTexture;
+
+    private bool m_dying;
+    private float m_timeToDie;
+
     // Use this for initialization
     void Start () {
         m_Camera = Camera.main;
+        m_dying = false;
+        m_timeToDie = 5.5f;
     }
 	
 	// Update is called once per frame
@@ -76,6 +85,25 @@ public class TimeManipulatingPlayer : MonoBehaviour {
 
 		//ResourceViewText.text = "RESOURCE = " + TimeResource;
 
+        if (m_dying)
+        {
+            if (m_timeToDie <= 0)
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            m_timeToDie -= Time.deltaTime;
+            transform.GetChild(0).localPosition -= new Vector3(0, 0.3f * Time.deltaTime, 0);
+            if (m_timeToDie <= 5f)
+            {
+                TimeManipulated[] list = UnityEngine.Object.FindObjectsOfType<TimeManipulated>();
+                if (list.Length > 0)
+                {
+                    foreach (TimeManipulated timeManipulated in list)
+                    {
+                        timeManipulated.SetTimeState(TimeState.Backward);
+                        timeManipulated.GetComponent<TimeManipulated>().FixedUpdate();
+                    }
+                }
+            }
+        }
     }
 
     private void Shoot()
@@ -88,8 +116,16 @@ public class TimeManipulatingPlayer : MonoBehaviour {
         }
     }
 
+    public void Die()
+    {
+        m_dying = true;
+        GetComponent<FirstPersonController>().enabled = false;
+    }
+
     private void TimeManipulation()
     {
+        if (m_dying) return;
+
         TimeManipulated[] list = UnityEngine.Object.FindObjectsOfType<TimeManipulated>();
         if (list.Length <= 0)
             return;
@@ -169,5 +205,14 @@ public class TimeManipulatingPlayer : MonoBehaviour {
 		}
 
 	}
+
+    void OnGUI()
+    {
+        if (m_timeToDie <= 5)
+        {
+            GUI.color = new Color(GUI.color.r, GUI.color.g, GUI.color.b, 3f - m_timeToDie);
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fadeoutTexture);
+        }
+    }
 
 }

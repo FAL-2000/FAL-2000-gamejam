@@ -39,7 +39,7 @@ public class ShootingRobot : RobotMovement {
                     m_timeToFire -= Time.fixedDeltaTime;
                     if (m_timeToFire <= 0)
                     {
-                        Shoot();
+                        Shoot(plr.transform.position);
                         m_timeToFire = 1 / rateOfFire;
                     }
                 }
@@ -91,9 +91,11 @@ public class ShootingRobot : RobotMovement {
         GetComponent<TimeManipulated>().SetRobotState(state);
     }
 
-    private void Shoot()
+    private void Shoot(Vector3 target)
     {
-        Instantiate(bullet, transform.position + transform.forward * 0.7f + transform.right * 0.25f + transform.up * 0.68f, transform.rotation);
+        Vector3 origin = transform.position + transform.forward * 0.7f + transform.right * 0.25f + transform.up * 0.68f;
+        float corrected = -Vector3.Angle(transform.forward, (target - origin).normalized) / 2;
+        Instantiate(bullet, origin, transform.rotation * Quaternion.AngleAxis(corrected, Vector3.up));
     }
 
     public override void SetRobotState(List<string> robotState)

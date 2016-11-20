@@ -24,8 +24,6 @@ public class Bullet : RobotMovement {
 
     // Use this for initialization
     void Start () {
-        //float y = GameObject.FindGameObjectWithTag("Player").transform.position.y;
-        //transform.position = new Vector3(transform.position.x, y, transform.position.z);
         m_origin = transform.position;
 	}
 	
@@ -53,7 +51,7 @@ public class Bullet : RobotMovement {
         if (GetComponent<TimeManipulated>().GetTimeState() == TimeState.Normal)
         {
             if (coll.tag == "Player")
-                Debug.Log("DEAD");
+                coll.transform.gameObject.GetComponent<TimeManipulatingPlayer>().Die();
             if (coll.tag == "Enemy")
                 Debug.Log("Enemy Dead");
             if (coll.tag != "Bullet")

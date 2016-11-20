@@ -34,7 +34,7 @@ public class MeleeRobot : RobotMovement {
                 }
                 if (CanSee(plr) && CloseToTarget(plr.transform.position, punchDistance))
                 {
-                    Debug.Log("DEAD!!");
+                    plr.GetComponent<TimeManipulatingPlayer>().Die();
                 }
                 if (!CanSee(plr) && CloseToTarget(m_currentDest, 1))
                 {
