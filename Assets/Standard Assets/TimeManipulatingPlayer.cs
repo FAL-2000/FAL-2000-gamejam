@@ -25,6 +25,7 @@ public class TimeManipulatingPlayer : MonoBehaviour {
 	public AudioSource TimeTravelSound;
 	public AudioSource EndOfTimeTravelSound;
 	public AudioSource TimeResourceRecoverSound;
+    public AudioClip DeathSound;
 
     public Texture fadeoutTexture;
 
@@ -120,6 +121,8 @@ public class TimeManipulatingPlayer : MonoBehaviour {
     {
         if (DEBUGPOWERS)
             return;
+        if (!m_dying)
+            AudioSource.PlayClipAtPoint(DeathSound, transform.position);
         m_dying = true;
         GetComponent<FirstPersonController>().enabled = false;
     }

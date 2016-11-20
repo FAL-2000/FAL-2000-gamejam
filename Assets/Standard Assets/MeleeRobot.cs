@@ -12,6 +12,7 @@ public class MeleeRobot : RobotMovement {
     public float lookAroundTime;
     public float punchDistance;
     public float lookAroundAngle;
+    public AudioClip alert;
 
     private Vector3 m_lastVelocity = Vector3.zero;
     private AIState m_aiState = AIState.Patrol;
@@ -52,6 +53,7 @@ public class MeleeRobot : RobotMovement {
                 if (CanSee(plr))
                 {
                     m_aiState = AIState.Attack;
+                    AudioSource.PlayClipAtPoint(alert, plr.transform.position);
                 }
                 break;
             case AIState.Wait:
@@ -67,6 +69,7 @@ public class MeleeRobot : RobotMovement {
                 if (CanSee(plr))
                 {
                     m_aiState = AIState.Attack;
+                    AudioSource.PlayClipAtPoint(alert, plr.transform.position);
                 }
                 break;
             default:
