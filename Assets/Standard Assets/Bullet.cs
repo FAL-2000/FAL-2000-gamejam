@@ -25,7 +25,7 @@ public class Bullet : RobotMovement {
     // Use this for initialization
     void Start () {
         m_origin = transform.position;
-        GetComponent<AudioSource>().Play();
+        GetComponent<AudioSource>().Play();	//
 	}
 	
 	// Update is called once per frame

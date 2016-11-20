@@ -157,7 +157,7 @@ public class ShootingRobot : RobotMovement {
         float halfFov = Mathf.Deg2Rad * fov / 2;
         if (Vector3.Dot (targetDir, transform.forward) > Mathf.Cos (halfFov) && CloseToTarget (plr.transform.position, heartRipDistance)) {
 			Debug.Log ("EAT YOUR HEART OUT");
-			Destroy(this.gameObject);
+			Destroy(this.gameObject);	//DIEE
 		}
     }
 
