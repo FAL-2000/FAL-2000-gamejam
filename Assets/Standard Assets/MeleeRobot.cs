@@ -159,8 +159,10 @@ public class MeleeRobot : RobotMovement {
         GameObject plr = GameObject.FindGameObjectWithTag("Player");
         Vector3 targetDir = (transform.position - plr.transform.position).normalized;
         float halfFov = Mathf.Deg2Rad * fov / 2;
-        if (Vector3.Dot(targetDir, transform.forward) > Mathf.Cos(halfFov) && CloseToTarget(plr.transform.position, punchDistance))
-            Debug.Log("EAT YOUR HEART OUT");
+		if (Vector3.Dot(targetDir, transform.forward) > Mathf.Cos(halfFov) && CloseToTarget(plr.transform.position, punchDistance)){
+			Debug.Log ("EAT YOUR HEART OUT");
+			Destroy(this.gameObject);
+		}
     }
 
     private string SerializeVector(Vector3 vec)

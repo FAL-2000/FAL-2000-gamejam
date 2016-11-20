@@ -56,7 +56,7 @@ public class Bullet : RobotMovement {
             if (coll.tag == "Player")
                 coll.transform.gameObject.GetComponent<TimeManipulatingPlayer>().Die();
             if (coll.tag == "Enemy")
-                Debug.Log("Enemy Dead");
+				Destroy(coll.gameObject);
             if (coll.tag != "Bullet")
                 Destroy(gameObject);
         }

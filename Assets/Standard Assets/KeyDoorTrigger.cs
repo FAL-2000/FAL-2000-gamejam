@@ -17,7 +17,7 @@ public class KeyDoorTrigger : MonoBehaviour {
     {
         //Debug.Log(other.name);
 
-        if (other.tag == "Enemy")
+        if (other.tag == "Robot")
         {
             if (transform.name == "GlassDoorTrigger")
             {

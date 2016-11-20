@@ -7,10 +7,6 @@ public class DoubleRightDoor : MonoBehaviour {
     public AudioSource noise1;
     public AudioSource noise2;
 
-    public GameObject openLight1;
-    public GameObject closedLight1;
-    public GameObject openLight2;
-    public GameObject closedLight2;
 
     private static short CLOSED = 0;
     private static short CLOSING = 1;
@@ -22,26 +18,26 @@ public class DoubleRightDoor : MonoBehaviour {
     public float movementSpeed = 1.0F;
     public float maxMove = 1.35F;
 
-    private float targetZ;
-    private float originalZ;
+    private float targetX;
+    private float originalX;
 
     // Use this for initialization
     void Start () {
-        originalZ = transform.localPosition.z;
-        targetZ = originalZ + maxMove;
+        originalX = transform.localPosition.x;
+        targetX = originalX + maxMove;
         sounds = GetComponents<AudioSource>();
         noise1 = sounds[0];
         noise2 = sounds[1];
     }
-
-    // Update is called once per frame
-    void Update()
+	
+	// Update is called once per frame
+	void Update ()
     {
         if (state == OPENING)
         {
-            if (transform.localPosition.z < targetZ)
+            if (transform.localPosition.x < targetX)
             {
-                transform.Translate(new Vector3(.0F, -1.0F, .0F) * Time.deltaTime * movementSpeed);
+                transform.Translate(new Vector3(1.0F, 0.0F, 0.0F) * Time.deltaTime * movementSpeed);
             }
             else
             {
@@ -50,9 +46,9 @@ public class DoubleRightDoor : MonoBehaviour {
         }
         else if (state == CLOSING)
         {
-            if (transform.localPosition.z > originalZ)
+            if (transform.localPosition.x > originalX)
             {
-                transform.Translate(new Vector3(0F, 1F, 0F) * Time.deltaTime * movementSpeed);
+                transform.Translate(new Vector3(-1F, 0F, 0F) * Time.deltaTime * movementSpeed);
             }
             else
             {
@@ -67,20 +63,12 @@ public class DoubleRightDoor : MonoBehaviour {
         if (state == CLOSED || state == CLOSING)
         {
             state = OPENING;
-            openLight1.SetActive(true);
-            openLight2.SetActive(true);
-            closedLight1.SetActive(false);
-            closedLight2.SetActive(false);
             noise1.Play();
 
         }
         else if (state == OPEN || state == OPENING)
         {
             state = CLOSING;
-            openLight1.SetActive(false);
-            openLight2.SetActive(false);
-            closedLight1.SetActive(true);
-            closedLight2.SetActive(true);
             noise2.Play();
         }
     }

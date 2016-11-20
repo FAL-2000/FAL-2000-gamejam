@@ -8,8 +8,6 @@ public class RayCasterScript : MonoBehaviour {
 
     Camera camera;
     DoorScript2 ds2;
-    DoubleLeftDoor dld;
-    DoubleRightDoor drd;
 
     void Start()
     {
@@ -26,37 +24,31 @@ public class RayCasterScript : MonoBehaviour {
             //print("I'm looking at " + hit.transform.name);   
             if (Input.GetKeyDown("e"))
             {
-                //Debug.Log("E pressed");
+                Debug.Log("E pressed");
 
                 switch (hit.transform.tag)
                 {
                     case "KeyNone":
                         {
-                            //ds2 = hit.transform.findGetChild(0).GetComponent<DoorScript2>();
-							ds2 = hit.transform.GetComponentInChildren<DoorScript2>();
-                            //Debug.Log("Calling buttonPress()");
+                            ds2 = hit.transform.GetChild(0).GetComponent<DoorScript2>();
+                            Debug.Log("Calling buttonPress()");
                             ds2.buttonPress();
                             break;
                         }
                     case "KeyRed":
+                        if (hit.transform.tag == "KeyRed")
+                        {
                             if (ownsKeyRed)
                             {
-								ds2 = hit.transform.GetComponentInChildren<DoorScript2>();
-                              //  ds2 = hit.transform.GetChild(0).GetComponent<DoorScript2>();
-                                //Debug.Log("Calling buttonPress()");
+                                ds2 = hit.transform.GetChild(0).GetComponent<DoorScript2>();
+                                Debug.Log("Calling buttonPress()");
                                 ds2.buttonPress();
                             }
                             else
                             {
-                                //Debug.Log("Player missing red key");
+                                Debug.Log("Player missing red key");
                             }
-                        break;
-                    case "DoubleKeyNone":
-                        dld = hit.transform.Find("Smaller_Door").GetComponent<DoubleLeftDoor>();
-                        drd = hit.transform.Find("Bigger_Door").GetComponent<DoubleRightDoor>();
-                        dld.buttonPress();
-                        drd.buttonPress();
-
+                        }
                         break;
                     default:
                         {
